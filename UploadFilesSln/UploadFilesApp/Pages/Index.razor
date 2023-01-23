@@ -1,9 +1,63 @@
 ﻿@page "/"
+@inject IConfiguration config
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Upload Demo App</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>File Upload Experiment</h1>
 
-Welcome to your new app.
+<InputFile class="form-control" OnChange="@LoadFiles" multiple accept=".png, .jpg, .jpeg, .gif" />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@if (errors.Count > 0)
+{
+    <h2>Errors</h2>
+    <ul class="text-danger">
+        @foreach (var error in errors)
+        {
+            <li>@error</li>
+        }
+    </ul>
+}
+
+@code {
+    // Maximum filesize is set to 3 Megabyte
+    private long maxFileSize = 3 * 1024 * 1024;
+    private int maxAllowedFiles = 3;
+    private List<string> errors = new();
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        errors.Clear();
+
+        if (e.FileCount > maxAllowedFiles)
+        {
+            errors.Add($"Error: Attempting to upload {e.FileCount} files, but only {maxAllowedFiles} are allowed!");
+            return;
+        }
+
+        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+        {
+            try
+            {
+                string newFileName = Path.ChangeExtension(
+                    Path.GetRandomFileName(),
+                    Path.GetFileName(file.Name)
+                );
+
+                string path = Path.Combine(
+                    @config.GetValue<string>("FileStorage")!,
+                    "loggedInUsername",
+                    newFileName
+                );
+
+                Directory.CreateDirectory(Path.Combine(@config.GetValue<string>("FileStorage")!, "loggedInUsername"));
+
+                await using FileStream fs = new(path, FileMode.Create);
+                await file.OpenReadStream(maxFileSize).CopyToAsync(fs);
+            }
+            catch (Exception ex)
+            {
+                errors.Add($"File: {file.Name} Error: {ex.Message}");
+            }
+        }
+    }
+}
