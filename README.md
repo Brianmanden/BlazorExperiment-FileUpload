@@ -10,7 +10,7 @@ I code along with [Tim Corey](https://www.youtube.com/@IAmTimCorey) in his mini 
 
 ## Part 2 - Uploading Files to Blazor - The Blazor File Upload Mini Course
 
-[![Watch the video](https://img.youtube.com/vi/9H6hs61UK84/default.jpg)](https://www.youtube.com/watch?v=https://www.youtube.com/watch?v=9H6hs61UK84
+[![Watch the video](https://img.youtube.com/vi/9H6hs61UK84/default.jpg)](https://www.youtube.com/watch?v=9H6hs61UK84
 )
 
 ## Part 3 - Associating File Uploads with a Form - The Blazor File Upload Mini Course
