@@ -1,9 +1,23 @@
 ﻿@page "/"
+@using UploadFilesApp.Data;
 @inject IConfiguration config
 
 <PageTitle>Upload Demo App</PageTitle>
 
 <h1>File Upload Experiment</h1>
+
+<EditForm Model="newCustomer">
+    <label for="firstName" class="fw-bold">First Name:</label>
+    <InputText id="firstName" class="form-control mb-4" @bind-Value="newCustomer.FirstName" />
+
+    <label for="lasstName" class="fw-bold">Last Name:</label>
+    <InputText id="lasstName" class="form-control mb-4" @bind-Value="newCustomer.LastName" />
+
+    <label for="profilePicture" class="fw-bold">Profile Picture:</label>
+    <InputFile OnChange="@LoadFiles" class="form-control mb-4" accept=".png, .jpg, .jpeg, .gif" />æ
+
+    <button class="btn btn-primary mb-4" type="submit">Create Customer</button>
+</EditForm>
 
 <InputFile class="form-control" OnChange="@LoadFiles" multiple accept=".png, .jpg, .jpeg, .gif" />
 
@@ -23,6 +37,7 @@
     private long maxFileSize = 3 * 1024 * 1024;
     private int maxAllowedFiles = 3;
     private List<string> errors = new();
+    private CustomerModel newCustomer = new();
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
