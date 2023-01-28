@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using UploadFilesApp.Data;
+@using UploadFilesLibrary.Interfaces;
 @inject IConfiguration config
+@inject ISqlDataAccess sql
 
 <PageTitle>Upload Demo App</PageTitle>
 
@@ -34,17 +36,24 @@
     private string userName = "loggedInUserName";
     // Maximum filesize is set to 3 Megabyte
     private long maxFileSize = 3 * 1024 * 1024;
-    private int maxAllowedFiles = 3;
     private List<string> errors = new();
     private CustomerModel newCustomer = new();
     private IBrowserFile? file;
 
     private async Task SubmitForm()
     {
+        errors.Clear();
+
         try
         {
             string relativePath = await CaptureFile();
             newCustomer.FileName = relativePath;
+
+            await sql.SaveData("dbo.spCustomer_Insert", "Default", newCustomer);
+
+            newCustomer = new();
+            file = null;
+            errors.Clear();
         }
         catch (Exception ex)
         {
@@ -92,6 +101,5 @@
             errors.Add($"File: {file.Name} Error: {ex.Message}");
             throw;
         }
-
     }
 }
