@@ -20,3 +20,6 @@ I code along with [Tim Corey](https://www.youtube.com/@IAmTimCorey) in his mini 
 ## Part 4 - Capturing Uploaded Files in SQL - The Blazor File Upload Mini Course
 
 [![Watch the video](https://img.youtube.com/vi/dzQvHGMIVpg/default.jpg)](https://www.youtube.com/watch?v=dzQvHGMIVpg)
+
+## Part 5 - Displaying Files From SQL - The Blazor File Upload Mini Course
+[![Watch the video](https://img.youtube.com/vi/pKehZTYB62Q/default.jpg)](https://www.youtube.com/watch?v=pKehZTYB62Q)
