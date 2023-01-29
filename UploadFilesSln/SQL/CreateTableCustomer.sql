@@ -1,8 +1,8 @@
 ﻿CREATE TABLE [dbo].[Customer]
 (
 	[Id] INT NOT NULL PRIMARY KEY Identity, 
-    [FirstName] NCHAR(50) NULL, 
-    [LastName] NCHAR(50) NULL, 
-    [FileName] NCHAR(2000) NULL, 
-    [UserName] NCHAR(50) NULL,
+    [FirstName] NVARCHAR(50) NULL, 
+    [LastName] NVARCHAR(50) NULL, 
+    [FileName] NVARCHAR(2000) NULL, 
+    [UserName] NVARCHAR(50) NULL,
 )
