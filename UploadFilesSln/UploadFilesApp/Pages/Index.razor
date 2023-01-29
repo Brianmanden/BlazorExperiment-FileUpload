@@ -32,6 +32,37 @@
     </ul>
 }
 
+@if (customers is not null)
+{
+    <h2>Existing Customers</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Profile Picture</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in customers)
+            {
+                <tr>
+                    <td>@customer.Id</td>
+                    <td>@customer.FirstName</td>
+                    <td>@customer.LastName</td>
+                    <td>
+                        @if (string.IsNullOrWhiteSpace(customer.FileName) == false)
+                        {
+                            <img src="@CreateWebPath(customer.FileName)" title="Profile Picture - @customer.FirstName @customer.LastName" width="150" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 @code {
     private string userName = "loggedInUserName";
     // Maximum filesize is set to 3 Megabyte
@@ -39,6 +70,26 @@
     private List<string> errors = new();
     private CustomerModel newCustomer = new();
     private IBrowserFile? file;
+    private List<CustomerModel>? customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCustomers();
+    }
+
+    private string CreateWebPath(string relativePath)
+    {
+        return Path.Combine(config.GetValue<string>("WebStorageRoot")!, relativePath);
+    }
+
+    private async Task LoadCustomers()
+    {
+        customers = await sql.LoadData<CustomerModel>(
+            "dbo.spCustomer_GetAll",
+            "Default",
+            null
+        );
+    }
 
     private async Task SubmitForm()
     {
@@ -54,6 +105,8 @@
             newCustomer = new();
             file = null;
             errors.Clear();
+
+            await LoadCustomers();
         }
         catch (Exception ex)
         {
