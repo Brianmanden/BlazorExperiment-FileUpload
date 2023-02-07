@@ -23,3 +23,6 @@ I code along with [Tim Corey](https://www.youtube.com/@IAmTimCorey) in his mini 
 
 ## Part 5 - Displaying Files From SQL - The Blazor File Upload Mini Course
 [![Watch the video](https://img.youtube.com/vi/pKehZTYB62Q/default.jpg)](https://www.youtube.com/watch?v=pKehZTYB62Q)
+
+## Part 6 - 7 File Uploading in C# Best Practices - The Blazor File Upload Mini Course
+[![Watch the video](https://img.youtube.com/vi/PFs0mzYHQI0/default.jpg)](https://www.youtube.com/watch?v=PFs0mzYHQI0)
